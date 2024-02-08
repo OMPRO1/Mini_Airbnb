@@ -7,6 +7,7 @@ const path = require('path');
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
+app.use(express.urlencoded({extended : true}));
 
 async function main(){
     await mongoose.connect(MONGO_URL);
@@ -30,8 +31,12 @@ app.get("/" ,(req,res) => {
 
 app.get("/listings", async (req,res) => {
     const allListings = await Listing.find({});
-    console.log(allListings);
+    //console.log(allListings);
     res.render("./listings/index.ejs",{allListings});
+});
+
+app.get("/listings/new" , (req,res) => {
+    res.render("./listings/new.ejs");
 });
 
 app.get("/listings/:id", async (req,res) => {
@@ -40,3 +45,13 @@ app.get("/listings/:id", async (req,res) => {
 
     res.render("./listings/show.ejs",{listing});
 }); 
+  
+app.post("/listings", (req,res) =>{
+    let data = req.body;
+     console.log(data);
+     res.redirect("/listings");
+});
+
+app.get("/listings/show" , (req,res) => {
+    res.send("Working!");
+});
