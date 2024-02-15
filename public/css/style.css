@@ -72,7 +72,6 @@ body{
 
 .card-text p{
     text-decoration-color: #000000 !important;
-    font-weight: 400 !important;
 }
 
 .listing-link{
@@ -80,6 +79,8 @@ body{
     text-decoration: none !important; 
     margin-bottom: 20px;
 }
+
+
 
 .card-img-overlay{
     size: cover;
@@ -91,7 +92,48 @@ body{
     background-color: white;
 }
 
-.add-btn{
+.add-btn , .btn-edit{
     background-color: crimson !important;
     border: none !important;
+}
+
+.show-card{
+    margin: auto;
+    margin-right: 46%;
+}
+
+.head{
+    margin: auto;
+}
+
+.om:hover{
+    opacity: 0.4;
+    background-color: hotpink;
+}
+.rut:hover{
+    text-decoration: underline;
+    color: hotpink;
+}
+
+.fa-square-facebook:hover{
+    opacity: 0.4;
+    background-color: aqua;
+}
+
+.fa-square-instagram:hover{
+    opacity: 0.4;
+    background-color: hotpink;
+}
+
+.fa-linkedin:hover{
+    opacity: 0.4;
+    background-color: blue;
+}
+
+.yash{
+    display: flex;
+    justify-content: space-between;
+}
+.delete-btn{
+    background-color: #000000 !important;
 }
