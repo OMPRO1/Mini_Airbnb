@@ -1,11 +1,9 @@
 <% layout('/layouts/boilerplate') -%>
 <body>
-    <h3 class="head" style="text-align: center;"><b>Listing Details</b></h3><br>
+    <h3 class="head" style="text-align: center;"><b><%= listing.title %></b></h3><br>
   <div class="card show-card" style="width: 18rem;">
     <img src="<%= listing.image %>" class="card-img-top offset-4 mb-3" alt="Listing-Image">
     <div class="card-body">
-      <h5 class="card-title offset-4"><b><%= listing.title %></b></h5>
-      <br>
       <p class="card-text offset-4" style="width: 28rem;"><%= listing.description %></p>
       <p class="card-text offset-4">&#x20B9; <%= listing.price.toLocaleString("en-IN") %>/night</p>
       <p class="card-text offset-4">Location : <%= listing.location %></p>
@@ -18,5 +16,20 @@
       </div>
     </div>
   </div>
-   
+  
+  <!-- Review Section -->
+   <div class="col-8 offset-3">
+    <h3>Leave a rating</h3>
+    <form action="">
+      <div class="mb-3 mt-3">
+        <label for="rating" class="form-label">Rating</label>
+        <input type="range" min="1" max="5" name="review[rating]" id="review">
+      </div>
+      <div>
+        <label for="comment" class="form-label">Comments</label>
+        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control"></textarea>
+      </div>
+      <button class="btn btn-outline-dark">Submit</button>
+    </form>
+   </div>
 </body>
