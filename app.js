@@ -8,8 +8,8 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const wrapAsync = require('./utils/wrapAsync.js');
 const ExpressError = require('./utils/ExpressError.js');
-const listingSchema = require('./schema.js');
-
+const {listingSchema , reviewSchema} = require('./schema.js');
+const Review = require("./models/review.js");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -39,6 +39,18 @@ const validateListing = (req,res,next) => {
     }
 }
 
+
+const validateReview = (req,res,next) => {
+    let {error} = reviewSchema.validate(req.body);
+    if(error){
+        throw new ExpressError(400,error);
+    }else{
+        next();
+    }
+}
+
+  
+
 app.listen(8080, () => {
     console.log("Server running on port:8080");
 });
@@ -62,7 +74,7 @@ app.get("/listings/new" , (req,res) => {
 app.get("/listings/:id" , wrapAsync(async (req,res,next) => {
     let {id} = req.params;
     console.log(id);
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate('reviews');
     console.log(listing);
     res.render("./listings/show.ejs",{listing});
 }));
@@ -96,6 +108,28 @@ app.delete("/listings/:id", wrapAsync(async (req,res) => {
     res.redirect("/listings");
 }));
 
+//Review section 
+
+app.post("/listings/:id/reviews",validateReview, wrapAsync(async (req,res) => {
+    let listing = await Listing.findById(req.params.id);
+    let newReview = await new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+
+    res.redirect(`/listings/${listing._id}`);
+}));
+
+// delete review route
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync( async (req,res) => {
+    let {id,reviewId} = req.params;
+
+    await Review.findByIdAndDelete(reviewId);
+    await Listing.findByIdAndUpdate(id,{$pull: {reviews : reviewId}});
+
+    res.redirect(`/listings/${id}`);
+}));
 
 //If a request comes on random route then error should be throwm
 // app.all("*", (req,res,next) => {
