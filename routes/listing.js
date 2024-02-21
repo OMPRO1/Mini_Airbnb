@@ -5,7 +5,8 @@ const wrapAsync = require('../utils/wrapAsync.js');
 const ExpressError = require('../utils/ExpressError.js');
 const {listingSchema , reviewSchema} = require('../schema.js');
 const Listing = require("../models/Listing.js");
-const flash = require("connect-flash")
+const flash = require("connect-flash");
+const {isLoggedIn} = require("../middleware.js");
 
 const validateListing = (req,res,next) => {
     let {error} = listingSchema.validate(req.body);
@@ -36,7 +37,7 @@ router.get("/", wrapAsync(async (req,res) => {
 }));
 
 
-router.get("/new" , (req,res) => {
+router.get("/new" , isLoggedIn , (req,res) => {
     res.render("./listings/new.ejs");
 }); 
 
@@ -60,13 +61,13 @@ router.post("/",validateListing, wrapAsync(async (req,res,next) =>{
     res.redirect("/listings");
 }));
 
-router.get("/:id/edit" , wrapAsync(async (req,res,next) => {
+router.get("/:id/edit" ,isLoggedIn, wrapAsync(async (req,res,next) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
     res.render("./listings/edit.ejs",{listing});
 }));
 
-router.put("/:id" , validateListing ,wrapAsync(async (req,res) => {
+router.put("/:id" , isLoggedIn, validateListing ,wrapAsync(async (req,res) => {
     if(!req.body.listing){
         throw new ExpressError(400,"BAD REQUEST FROM CLIENT");
     }
@@ -76,7 +77,7 @@ router.put("/:id" , validateListing ,wrapAsync(async (req,res) => {
     res.redirect(`/listings/${id}`);
 }));
 
-router.delete("/:id", wrapAsync(async (req,res) => {
+router.delete("/:id",isLoggedIn, wrapAsync(async (req,res) => {
     let {id} = req.params;
     const deletedListing = await Listing.findByIdAndDelete(id);
     req.flash("success","Listing Deleted!");
