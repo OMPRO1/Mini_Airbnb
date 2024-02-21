@@ -9,12 +9,16 @@
       <p class="card-text offset-4">&#x20B9; <%= listing.price.toLocaleString("en-IN") %>/night</p>
       <p class="card-text offset-4">Location : <%= listing.location %></p>
       <p class="card-text offset-4">Country : <%= listing.country %></p>
-      <div class="col-1 offset-4 yash">
-        <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary btn-edit" style="margin: auto;">Edit</a>
-        <form action="/listings/<%= listing._id %>?_method=DELETE" method="post">
-        <button class="btn btn-primary btn-edit delete-btn" type="submit" style="margin-left: 10px;">Delete</button>
-        </form>
-      </div>
+
+      <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+        <div class="col-1 offset-4 yash">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary btn-edit" style="margin: auto;">Edit</a>
+          <form action="/listings/<%= listing._id %>?_method=DELETE" method="post">
+          <button class="btn btn-primary btn-edit delete-btn" type="submit" style="margin-left: 10px;">Delete</button>
+          </form>
+        </div>
+      <% } %>
+
     </div>
   </div>
   
