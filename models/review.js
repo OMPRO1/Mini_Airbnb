@@ -16,7 +16,11 @@ const reviewSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref:"User",
     }
-});
+},
+{
+    strict:false,
+}
+);
 
 const Review = mongoose.model("Review",reviewSchema);
 
