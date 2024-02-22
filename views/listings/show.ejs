@@ -2,7 +2,7 @@
 <body>
     <h3 class="head" style="text-align: center;"><b><%= listing.title %></b></h3><br>
   <div class="card show-card listing-card" style="width: 18rem;">
-    <img src="<%= listing.image %>" class="card-img-top offset-4 mb-3" alt="Listing-Image">
+    <img src="<%= listing.image.url %>" class="card-img-top offset-4 mb-3" alt="Listing-Image">
     <div class="card-body">
       <p class="card-text offset-4" style="width: 28rem;">Owned By <%= listing.owner.username %></p>
       <p class="card-text offset-4" style="width: 28rem;"><%= listing.description %></p>
