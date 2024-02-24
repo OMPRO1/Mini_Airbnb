@@ -2,7 +2,7 @@
 <body>
     <h3>Edit your listing</h3>
 
-    <form action="/listings/<%= listing._id %>?_method=PUT" method="post" novalidate class="needs-validation">
+    <form action="/listings/<%= listing._id %>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" value="<%= listing.title %>" name="listing[title]" class="form-control" required>
@@ -13,8 +13,13 @@
         </div>
         
         <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input type="text" name="listing[image]" value="<%= listing.image %>" class="form-control" required>
+            Original Listing Image <br>
+            <img src="<%= orignalImageUrl %>" alt="OG" >
+        </div>
+        
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload New Image</label>
+            <input type="file" name="listing[image]" class="form-control">
         </div>
         <div class="row">
             <div class="mb-3 col-md-8" > 

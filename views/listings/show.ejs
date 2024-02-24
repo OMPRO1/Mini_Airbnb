@@ -1,5 +1,4 @@
 <% layout('/layouts/boilerplate') -%>
-<body>
     <h3 class="head" style="text-align: center;"><b><%= listing.title %></b></h3><br>
   <div class="card show-card listing-card" style="width: 18rem;">
     <img src="<%= listing.image.url %>" class="card-img-top offset-4 mb-3" alt="Listing-Image">
@@ -60,8 +59,9 @@
       <hr>
     <% } %>
 
-    <p><b>All Reviews</b></p>
+    <% if (listing.reviews.length > 0) { %>
       <div class="row">
+        <p><b>All Reviews</b></p>
         <% for( let review of listing.reviews ) { %>
           <div class="card col-5 mb-3 ms-3">
             <div class="card-body">
@@ -76,5 +76,22 @@
           </div>
         <% } %>
       </div>
+
+    <% } %>  
+          <div class="col-6 mb-3 mt-2">
+        <h3>Where you'll be</h3>
+        <div id="map"></div>
+      </div>
    </div>
-</body>
+   <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+   <script>
+    let mapToken = "<%= process.env.MAP_TOKEN %>";
+    console.log(mapToken);
+    mapboxgl.accessToken = "pk.eyJ1IjoicnV0dXJhajEwIiwiYSI6ImNsc3pqd2M4MTBsc2Eya28yZzFxcGs0Y3cifQ.ba4SN0h1pC5GIpKbFmG2iQ";
+      const map = new mapboxgl.Map({
+          container: 'map', // container ID
+          center: [75.33439758863574, 17.68257277637999], // starting position [lng, lat]
+          zoom: 9 // starting zoom
+      });
+  </script>
+
