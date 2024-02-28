@@ -70,7 +70,7 @@
               <p class="starability-result card-text" data-rating="<%= review.rating %>">
               </p>
             </div>
-            <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+            <form action="/listings/<%= listing._id %>/review/<%= review._id %>?_method=DELETE" method="post">
               <button class="mb-3 btn btn-dark btn-sm mt-3" type="submit">Delete</button>
             </form>
           </div>
